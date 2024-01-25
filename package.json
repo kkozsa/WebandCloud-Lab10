@@ -10,7 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parser": "^1.20.2",
+    "ej": "^1.0.4",
+    "ejs": "^3.1.9",
+    "express": "^4.17.1",
+    "express-validator": "^7.0.1",
+    "joi": "^17.12.0",
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

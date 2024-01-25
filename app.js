@@ -1,66 +1,18 @@
-console.log('Express Tutorial')
+var express = require('express');
+const path = require('path'); // use the pre-installed path module
+var app = express();
 
-const http = require('http') // http built in module
-const { readFileSync } = require('fs')
-// get all files
-const homePage = readFileSync('./navbar-app/index.html')
-const homeStyles = readFileSync('./navbar-app/styles.css')
-const homeImage = readFileSync('./navbar-app/logo.svg')
-const homeLogic = readFileSync('./navbar-app/browser-app.js')
+var bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
 
-
-//use parameters req and res for our server as we need access to these
-
-const server = http.createServer((req,res)=>{
-    console.log(req.method);
-    console.log(req.url);
-
-    const url = req.url;
-    //home page
-    if(url === '/'){
-        res.writeHead(200,{'content-type':'text/html'}) //return status code 
-        res.write(homePage);
-        res.end()
-    }
-    //about page
-    else if(url === '/about'){
-        res.writeHead(200,{'content-type':'text/html'})  //return status code
-        res.write('<h1>about page</h1>')
-        res.end()
-    }
-
-
-    //styles
-    else if(url === '/styles.css'){
-        res.writeHead(200,{'content-type':'text/css'})  
-        res.write(homeStyles)
-        res.end()
-    }
-    //image/logo
-    else if(url === '/logo.svg'){
-        res.writeHead(200,{'content-type':'image/svg+xml'})  
-        res.write(homeImage)
-        res.end()
-    }
-    //logic
-    else if(url === '/browser-app.js'){
-        res.writeHead(200,{'content-type':'text/javascript'})  
-        res.write(homeLogic)
-        res.end()
-    }
-
-
+app.get('/', function (req, res) {
+          res.sendFile(path.resolve(__dirname, 'index.html'));
+});
+app.post('/submit-student-data', function (req, res) {
+    var name = req.body.firstName + ' ' + req.body.lastName;
     
-    //404 resource not found
-    else{
-        res.writeHead(404,{'content-type':'text/html'})  //return status code
-        res.write('<h1>page not found</h1>')
-        res.end()
-    }  
-
-    
- 
-})  //a callback function will be called every time a user hits the sever
-
-server.listen(5555) // listen on port 5555
-
+    res.send(name + ' Submitted Successfully!');
+});
+var server = app.listen(5555, function () {
+    console.log('Node server is running..');
+});
